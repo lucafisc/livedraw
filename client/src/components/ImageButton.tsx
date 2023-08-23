@@ -4,12 +4,13 @@ import Image from "next/image"
 
 interface ImageButtonProps {
   src: string;
-  alt: string;
+	alt: string;
+	onClick?: () => void;
 }
 
-const ImageButton: React.FC<ImageButtonProps> = ({ src, alt }) => {
+const ImageButton: React.FC<ImageButtonProps> = ({ src, alt, onClick }) => {
   return (
-    <button className="">
+    <button className="" onClick={onClick}>
       <Image src={src} alt={alt} width={50} height={50} />
     </button>
   );

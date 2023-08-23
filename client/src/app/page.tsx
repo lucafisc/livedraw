@@ -77,14 +77,32 @@ function Home(props: IAppProps) {
                   triangle={"top-right"}
                   width={"212px"}
                   colors={[
-					  '#FFA3FF', '#A3FFFF', '#FFFFA3', '#FFA3A3', '#A3FFA3', '#A3A3FF', '#FFCBA3', '#FFFFFF',
-					  '#FF00FF', '#00FFFF', '#FFFF00', '#FF0000', '#00FF00', '#0000FF', '#FF9900', '#000000'
+                    "#FFA3FF",
+                    "#A3FFFF",
+                    "#FFFFA3",
+                    "#FFA3A3",
+                    "#A3FFA3",
+                    "#A3A3FF",
+                    "#FFCBA3",
+                    "#FFFFFF",
+                    "#FF00FF",
+                    "#00FFFF",
+                    "#FFFF00",
+                    "#FF0000",
+                    "#00FF00",
+                    "#0000FF",
+                    "#FF9900",
+                    "#000000",
                   ]}
                 />
               </div>
             )}
           </button>
-          <ImageButton src="/images/eraser.svg" alt="eraser" />
+          <ImageButton
+            src="/images/eraser.svg"
+            alt="eraser"
+            onClick={() => socket.emit("clear")}
+          />
         </div>
       </FlexContainer>
       <div
@@ -104,14 +122,6 @@ function Home(props: IAppProps) {
           height={446}
           className="absolute top-0 left-0 w-full h-full"
         />
-      </div>
-      <div>
-        <button
-          onClick={() => socket.emit("clear")}
-          className="text-black p-2 border-black"
-        >
-          clear
-        </button>
       </div>
       <FlexContainer>
         <h2 className="text-xl font-karrik">i</h2>
