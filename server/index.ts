@@ -14,7 +14,8 @@ const io = new Server(server, {
 type DrawLine = {
   prevPoint: Point | null;
   currentPoint: Point;
-  lineColor: string;
+	lineColor: string;
+	isPencil: boolean;
 };
 
 type Point = {
@@ -24,8 +25,8 @@ type Point = {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.on("draw-line", ({ prevPoint, currentPoint, lineColor }: DrawLine) => {
-    socket.broadcast.emit("draw-line", { prevPoint, currentPoint, lineColor });
+  socket.on("draw-line", ({ prevPoint, currentPoint, lineColor, isPencil }: DrawLine) => {
+    socket.broadcast.emit("draw-line", { prevPoint, currentPoint, lineColor, isPencil });
   });
   socket.on("clear", () => io.emit("clear"));
 

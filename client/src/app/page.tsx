@@ -40,7 +40,7 @@ function Home(props: IAppProps) {
 
     socket.on(
       "draw-line",
-      ({ prevPoint, currentPoint, lineColor }: DrawLine) => {
+      ({ prevPoint, currentPoint, lineColor, isPencil }: DrawLine) => {
         draw({ prevPoint, currentPoint, ctx, lineColor, isPencil });
       }
     );
@@ -51,7 +51,7 @@ function Home(props: IAppProps) {
     };
   }, [canvasRef]);
   function createLine({ prevPoint, currentPoint, ctx }: Draw) {
-    socket.emit("draw-line", { prevPoint, currentPoint, lineColor });
+    socket.emit("draw-line", { prevPoint, currentPoint, lineColor, isPencil });
     draw({ prevPoint, currentPoint, ctx, lineColor, isPencil });
   }
 
