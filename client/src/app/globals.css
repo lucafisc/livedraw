@@ -27,6 +27,10 @@ body {
 	cursor: url('/images/cursor.png') 10 50, auto;
 }
 
+button, a, #picker, #picker *  {
+    cursor: url('/images/pointer.png') 20 -10, pointer;
+  }
+
 @font-face {
 	font-family: 'Karrik';
 	src: url("../fonts/Karrik-Regular.ttf");

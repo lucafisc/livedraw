@@ -11,7 +11,7 @@ interface ImageButtonProps {
 const ImageButton: React.FC<ImageButtonProps> = ({ src, alt, onClick }) => {
   return (
     <button className="" onClick={onClick}>
-      <Image src={src} alt={alt} width={50} height={50} />
+      <Image src={src} alt={alt} width={50} height={50} className=" transition-transform transform active:scale-95 hover:scale-105"/>
     </button>
   );
 };

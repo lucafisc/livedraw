@@ -16,8 +16,8 @@ export interface IAppProps {}
 
 function Home(props: IAppProps) {
   const [lineColor, setLineColor] = React.useState<string>("#000");
-	const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
-	const [isPencil, setIsPencil] = React.useState<boolean>(true);
+  const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
+  const [isPencil, setIsPencil] = React.useState<boolean>(true);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
 
   useEffect(() => {
@@ -60,19 +60,27 @@ function Home(props: IAppProps) {
       <FlexContainer>
         <h1 className="text-4xl font-karrik">live draw</h1>
         <div className="flex items-center justify-center relative">
-          <ImageButton src="/images/pencil.svg" alt="pencil" onClick={() => setIsPencil(true)}/>
-          <ImageButton src="/images/spray.svg" alt="spray" onClick={() => setIsPencil(false)}/>
+          <ImageButton
+            src="/images/pencil.svg"
+            alt="pencil"
+            onClick={() => setIsPencil(true)}
+          />
+          <ImageButton
+            src="/images/spray.svg"
+            alt="spray"
+            onClick={() => setIsPencil(false)}
+          />
           <button
             className="  flex justify-center items-center "
             style={{ width: 50, height: 50 }}
             onClick={() => setShowColorPicker(!showColorPicker)}
           >
             <div
-              className="border-2 border-black "
+              className="border-2 border-black transition-transform transform active:scale-95 hover:scale-105"
               style={{ width: 30, height: 20, backgroundColor: lineColor }}
             ></div>
             {showColorPicker && (
-              <div className="absolute top-12 right-14 z-10">
+              <div className="absolute top-12 right-14 z-10" id="picker">
                 <GithubPicker
                   color={lineColor}
                   onChange={(e) => setLineColor(e.hex)}
@@ -109,9 +117,11 @@ function Home(props: IAppProps) {
         />
       </div>
       <FlexContainer>
-        <h2 className="text-xl font-karrik">i</h2>
+        <h2 className="text-xl font-karrik ">i</h2>
         <a href="github.com/lucafisc">
-          <h2 className="text-xl font-karrik">github.com/lucafisc</h2>
+          <h2 className="text-xl font-karrik hover:text-yellow-100">
+            github.com/lucafisc
+          </h2>
         </a>
       </FlexContainer>
     </div>
