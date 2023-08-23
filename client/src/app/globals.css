@@ -3,42 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-	cursor: url('/images/cursor.png') 10 50, auto;
+	color: rgb(var(--foreground-rgb));
+	background: linear-gradient(to bottom,
+			transparent,
+			rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
-button, a, #picker, #picker *  {
-    cursor: url('/images/pointer.png') 20 -10, pointer;
-  }
+body.pencil-cursor {
+	cursor: url('/images/pencil.png') 10 50, auto;
+}
+
+body.spray-cursor {
+	cursor: url('/images/spray.png') -20 -60, auto;
+}
+
+
+button,
+a,
+#picker,
+#picker * {
+	cursor: url('/images/pointer.png') 20 -10, pointer;
+}
 
 @font-face {
 	font-family: 'Karrik';
 	src: url("../fonts/Karrik-Regular.ttf");
 	font-style: normal;
-  }
+}
 
-  @font-face {
+@font-face {
 	font-family: 'Karrik';
 	src: url("../fonts/Karrik-Italic.ttf");
 	font-style: italic;
-  }
+}

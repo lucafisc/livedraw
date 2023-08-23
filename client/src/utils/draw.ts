@@ -19,7 +19,7 @@ function drawLine({
   ctx.stroke();
   ctx.fillStyle = lineColor;
   ctx.beginPath();
-  ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
+//   ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
   ctx.fill();
 }
 
@@ -31,7 +31,7 @@ function drawSpray({
   }: DrawLine) {
 	const { x: currentX, y: currentY } = currentPoint;
 	const lineWidth = 3;
-	const sprayDensity = 100;
+	const sprayDensity = 20;
 	let startPoint = prevPoint ?? currentPoint;
   
 	ctx.fillStyle = lineColor;

@@ -55,6 +55,10 @@ function Home(props: IAppProps) {
     draw({ prevPoint, currentPoint, ctx, lineColor, isPencil });
   }
 
+  useEffect(() => {
+    document.body.className = isPencil ? "pencil-cursor" : "spray-cursor";
+  }, [isPencil]);
+
   return (
     <div className="w-screen h-screen bg-blue-200 flex justify-center items-center flex-col gap-2">
       <FlexContainer>
