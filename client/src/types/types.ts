@@ -6,7 +6,8 @@ export type Draw = {
 };
   
 export type DrawLine = Draw & {
-	lineColor: string
+	lineColor: string;
+	isPencil: boolean;
   }
   
   export type Point = {

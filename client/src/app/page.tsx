@@ -4,10 +4,11 @@ import * as React from "react";
 import { Draw, Point, DrawLine } from "../types/types";
 import { GithubPicker } from "react-color";
 import { io } from "socket.io-client";
-import { drawLine } from "../utils/drawLine";
+import { draw } from "../utils/draw";
 import { useEffect } from "react";
 import ImageButton from "@/components/ImageButton";
 import FlexContainer from "@/components/FlexContainer";
+import { colorPalette } from "@/utils/colorPalette";
 
 const socket = io("http://localhost:3001");
 
@@ -15,7 +16,8 @@ export interface IAppProps {}
 
 function Home(props: IAppProps) {
   const [lineColor, setLineColor] = React.useState<string>("#000");
-  const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
+	const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
+	const [isPencil, setIsPencil] = React.useState<boolean>(true);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ function Home(props: IAppProps) {
     socket.on(
       "draw-line",
       ({ prevPoint, currentPoint, lineColor }: DrawLine) => {
-        drawLine({ prevPoint, currentPoint, ctx, lineColor });
+        draw({ prevPoint, currentPoint, ctx, lineColor, isPencil });
       }
     );
     socket.on("clear", clear);
@@ -50,7 +52,7 @@ function Home(props: IAppProps) {
   }, [canvasRef]);
   function createLine({ prevPoint, currentPoint, ctx }: Draw) {
     socket.emit("draw-line", { prevPoint, currentPoint, lineColor });
-    drawLine({ prevPoint, currentPoint, ctx, lineColor });
+    draw({ prevPoint, currentPoint, ctx, lineColor, isPencil });
   }
 
   return (
@@ -58,8 +60,8 @@ function Home(props: IAppProps) {
       <FlexContainer>
         <h1 className="text-4xl font-karrik">live draw</h1>
         <div className="flex items-center justify-center relative">
-          <ImageButton src="/images/pencil.svg" alt="pencil" />
-          <ImageButton src="/images/spray.svg" alt="spray" />
+          <ImageButton src="/images/pencil.svg" alt="pencil" onClick={() => setIsPencil(true)}/>
+          <ImageButton src="/images/spray.svg" alt="spray" onClick={() => setIsPencil(false)}/>
           <button
             className="  flex justify-center items-center "
             style={{ width: 50, height: 50 }}
@@ -76,24 +78,7 @@ function Home(props: IAppProps) {
                   onChange={(e) => setLineColor(e.hex)}
                   triangle={"top-right"}
                   width={"212px"}
-                  colors={[
-                    "#FFA3FF",
-                    "#A3FFFF",
-                    "#FFFFA3",
-                    "#FFA3A3",
-                    "#A3FFA3",
-                    "#A3A3FF",
-                    "#FFCBA3",
-                    "#FFFFFF",
-                    "#FF00FF",
-                    "#00FFFF",
-                    "#FFFF00",
-                    "#FF0000",
-                    "#00FF00",
-                    "#0000FF",
-                    "#FF9900",
-                    "#000000",
-                  ]}
+                  colors={colorPalette}
                 />
               </div>
             )}
