@@ -27,6 +27,10 @@ body.pencil-cursor {
 	cursor: url('/images/pencil.png') 10 50, auto;
 }
 
+body.brush-cursor {
+	cursor: url('/images/brush.png') 80 150, auto;
+}
+
 body.spray-cursor {
 	cursor: url('/images/spray.png') -20 -60, auto;
 }

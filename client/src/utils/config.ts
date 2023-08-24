@@ -1,0 +1,25 @@
+export const config = {
+  colorPalette: [
+    "#FFA3FF",
+    "#A3FFFF",
+    "#FFFFA3",
+    "#FFA3A3",
+    "#A3FFA3",
+    "#A3A3FF",
+    "#FFCBA3",
+    "#FFFFFF",
+    "#FF00FF",
+    "#00FFFF",
+    "#FFFF00",
+    "#FF0000",
+    "#00FF00",
+    "#0000FF",
+    "#FF9900",
+    "#000000",
+	],
+	pencilWidth: 2,
+	brushWidth: 15,
+	sprayWidth: 3,
+	sprayDensity: 20,
+
+};

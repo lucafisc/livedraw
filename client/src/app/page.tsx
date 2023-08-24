@@ -1,14 +1,14 @@
 "use client";
 import { useDraw } from "@/hooks/useDraw";
 import * as React from "react";
-import { Draw, Point, DrawLine } from "../types/types";
+import { Draw, Point, DrawLine, Tools } from "../types/types";
 import { GithubPicker } from "react-color";
 import { io } from "socket.io-client";
 import { draw } from "../utils/draw";
 import { useEffect } from "react";
 import ImageButton from "@/components/ImageButton";
 import FlexContainer from "@/components/FlexContainer";
-import { colorPalette } from "@/utils/colorPalette";
+import { config } from "@/utils/config";
 
 const socket = io("http://localhost:3001");
 
@@ -17,7 +17,7 @@ export interface IAppProps {}
 function Home(props: IAppProps) {
   const [lineColor, setLineColor] = React.useState<string>("#000");
   const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
-  const [isPencil, setIsPencil] = React.useState<boolean>(true);
+  const [tool, setTool] = React.useState<Tools>(Tools.PENCIL);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
 
   useEffect(() => {
@@ -40,8 +40,8 @@ function Home(props: IAppProps) {
 
     socket.on(
       "draw-line",
-      ({ prevPoint, currentPoint, lineColor, isPencil }: DrawLine) => {
-        draw({ prevPoint, currentPoint, ctx, lineColor, isPencil });
+      ({ prevPoint, currentPoint, lineColor, tool }: DrawLine) => {
+        draw({ prevPoint, currentPoint, ctx, lineColor, tool });
       }
     );
     socket.on("clear", clear);
@@ -51,28 +51,48 @@ function Home(props: IAppProps) {
     };
   }, [canvasRef]);
   function createLine({ prevPoint, currentPoint, ctx }: Draw) {
-    socket.emit("draw-line", { prevPoint, currentPoint, lineColor, isPencil });
-    draw({ prevPoint, currentPoint, ctx, lineColor, isPencil });
+    socket.emit("draw-line", { prevPoint, currentPoint, lineColor, tool });
+    draw({ prevPoint, currentPoint, ctx, lineColor, tool });
   }
 
   useEffect(() => {
-    document.body.className = isPencil ? "pencil-cursor" : "spray-cursor";
-  }, [isPencil]);
+    let cursorClass = "";
+    switch (tool) {
+      case Tools.PENCIL:
+        cursorClass = "pencil-cursor";
+        break;
+      case Tools.SPRAY:
+        cursorClass = "spray-cursor";
+        break;
+      case Tools.BRUSH:
+        cursorClass = "brush-cursor";
+        break;
+      default:
+        cursorClass = "pencil-cursor";
+        break;
+    }
+    document.body.className = cursorClass;
+  }, [tool]);
 
   return (
-    <div className="w-screen h-screen bg-blue-200 flex justify-center items-center flex-col gap-2">
+    <div className="w-screen h-screen bg-blue-200 flex justify-between items-center flex-col gap-2">
       <FlexContainer>
         <h1 className="text-4xl font-karrik">live draw</h1>
         <div className="flex items-center justify-center relative">
           <ImageButton
             src="/images/pencil.svg"
             alt="pencil"
-            onClick={() => setIsPencil(true)}
+            onClick={() => setTool(Tools.PENCIL)}
+          />
+          <ImageButton
+            src="/images/brush.svg"
+            alt="brush"
+            onClick={() => setTool(Tools.BRUSH)}
           />
           <ImageButton
             src="/images/spray.svg"
             alt="spray"
-            onClick={() => setIsPencil(false)}
+            onClick={() => setTool(Tools.SPRAY)}
           />
           <button
             className="  flex justify-center items-center "
@@ -90,7 +110,7 @@ function Home(props: IAppProps) {
                   onChange={(e) => setLineColor(e.hex)}
                   triangle={"top-right"}
                   width={"212px"}
-                  colors={colorPalette}
+                  colors={config.colorPalette}
                 />
               </div>
             )}

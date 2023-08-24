@@ -11,11 +11,17 @@ const io = new Server(server, {
   },
 });
 
+export enum Tools {
+	PENCIL = 'pencil',
+	SPRAY = 'spray',
+	BRUSH = 'brush',
+  }
+
 type DrawLine = {
   prevPoint: Point | null;
   currentPoint: Point;
 	lineColor: string;
-	isPencil: boolean;
+	tool: Tools;
 };
 
 type Point = {
@@ -25,8 +31,8 @@ type Point = {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.on("draw-line", ({ prevPoint, currentPoint, lineColor, isPencil }: DrawLine) => {
-    socket.broadcast.emit("draw-line", { prevPoint, currentPoint, lineColor, isPencil });
+  socket.on("draw-line", ({ prevPoint, currentPoint, lineColor, tool }: DrawLine) => {
+    socket.broadcast.emit("draw-line", { prevPoint, currentPoint, lineColor, tool });
   });
   socket.on("clear", () => io.emit("clear"));
 

@@ -5,9 +5,14 @@ export type Draw = {
 	prevPoint: Point | null;
 };
   
+export enum Tools {
+  PENCIL = 'pencil',
+  SPRAY = 'spray',
+  BRUSH = 'brush',
+}
 export type DrawLine = Draw & {
 	lineColor: string;
-	isPencil: boolean;
+	tool: Tools;
   }
   
   export type Point = {
