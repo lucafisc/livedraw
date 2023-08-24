@@ -10,7 +10,7 @@ app.use(cors());
 
 const io = new Server(server, {
   cors: {
-    origin: "https://livedraw-1mtjcxqh5-lucafisc.vercel.app",
+    origin: "https://livedraw-ashy.vercel.app",
     methods: ["GET", "POST"]
   },
 });
