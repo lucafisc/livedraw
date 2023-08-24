@@ -10,7 +10,7 @@ import ImageButton from "@/components/ImageButton";
 import FlexContainer from "@/components/FlexContainer";
 import { config } from "@/utils/config";
 
-const socket = io("http://localhost:3001");
+const socket = io("https://livedrawserver.onrender.com");
 
 export interface IAppProps {}
 

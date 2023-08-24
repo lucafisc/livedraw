@@ -1,13 +1,17 @@
+import { Server } from "socket.io";
 const express = require("express");
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
+const cors = require("cors");
 
-import { Server } from "socket.io";
+app.use(cors());
+
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://livedraw-1mtjcxqh5-lucafisc.vercel.app",
+    methods: ["GET", "POST"]
   },
 });
 
