@@ -75,7 +75,7 @@ function Home(props: IAppProps) {
   }, [tool]);
 
   return (
-    <div className="w-screen h-screen bg-blue-200 flex justify-between items-center flex-col gap-2">
+    <div className="w-screen h-screen bg-green-200 flex justify-between items-center flex-col gap-2">
       <FlexContainer>
         <h1 className="text-4xl font-karrik">live draw</h1>
         <div className="flex items-center justify-center relative">
