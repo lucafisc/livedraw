@@ -10,7 +10,8 @@ import ImageButton from "@/components/ImageButton";
 import FlexContainer from "@/components/FlexContainer";
 import { config } from "@/utils/config";
 
-const socket = io("https://livedrawserver.onrender.com");
+// const socket = io("https://livedrawserver.onrender.com");
+// const socket = io("http://localhost:3001");
 
 export interface IAppProps {}
 
@@ -18,7 +19,19 @@ function Home(props: IAppProps) {
   const [lineColor, setLineColor] = React.useState<string>("#000");
   const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
   const [tool, setTool] = React.useState<Tools>(Tools.PENCIL);
+  const [usersCount, setUsersCount] = React.useState<number>(0);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
+  const [socket, setSocket] = React.useState<any>(io("https://livedrawserver.onrender.com"))
+
+  useEffect(() => {
+    socket.on("connected-users", (connectedUsers: number) => {
+      console.log("user connected or disconnected");
+      setUsersCount(connectedUsers);
+    });
+    return () => {
+      //socket.off("connected-users");
+    };
+  }, []);
 
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
@@ -48,6 +61,9 @@ function Home(props: IAppProps) {
     return () => {
       socket.off("draw-line");
       socket.off("clear");
+      socket.off("user-requested-canvas");
+      socket.off("receive-newest-canvas");
+      socket.off("user-connected");
     };
   }, [canvasRef]);
   function createLine({ prevPoint, currentPoint, ctx }: Draw) {
