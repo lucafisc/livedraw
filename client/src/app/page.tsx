@@ -28,7 +28,7 @@ function Home(props: IAppProps) {
 	  setUsersCount(connectedUsers);
 	});
 	return () => {
-	  socket.off("connected-users");
+	  //socket.off("connected-users");
 	};
   }, []);
 
