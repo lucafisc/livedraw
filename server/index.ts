@@ -7,18 +7,18 @@ const cors = require("cors");
 
 app.use(cors());
 
-// const io = new Server(server, {
-//   cors: {
-//     origin: "https://livedraw-ashy.vercel.app",
-//     methods: ["GET", "POST"]
-//   },
-// });
-
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://livedraw-ashy.vercel.app",
+    methods: ["GET", "POST"]
   },
 });
+
+// const io = new Server(server, {
+//   cors: {
+//     origin: "*",
+//   },
+// });
 
 export enum Tools {
   PENCIL = "pencil",
