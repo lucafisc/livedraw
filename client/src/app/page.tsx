@@ -10,7 +10,7 @@ import ImageButton from "@/components/ImageButton";
 import FlexContainer from "@/components/FlexContainer";
 import { config } from "@/utils/config";
 
-const socket = io("https://livedrawserver.onrender.com");
+// const socket = io("https://livedrawserver.onrender.com");
 // const socket = io("http://localhost:3001");
 
 export interface IAppProps {}
@@ -21,6 +21,7 @@ function Home(props: IAppProps) {
   const [tool, setTool] = React.useState<Tools>(Tools.PENCIL);
   const [usersCount, setUsersCount] = React.useState<number>(0);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
+  const [socket, setSocket] = React.useState<any>(io("https://livedrawserver.onrender.com"))
 
   useEffect(() => {
     socket.on("connected-users", (connectedUsers: number) => {
