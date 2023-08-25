@@ -1,17 +1,12 @@
 "use client";
 import { useDraw } from "@/hooks/useDraw";
 import * as React from "react";
-import { Draw, Point, DrawLine, Tools } from "../types/types";
-import { GithubPicker } from "react-color";
+import { Draw, DrawLine, Tools } from "../types/types";
 import { io } from "socket.io-client";
 import { draw } from "../utils/draw";
 import { useEffect } from "react";
-import ImageButton from "@/components/ImageButton";
-import FlexContainer from "@/components/FlexContainer";
-import { config } from "@/utils/config";
-
-// const socket = io("https://livedrawserver.onrender.com");
-// const socket = io("http://localhost:3001");
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export interface IAppProps {}
 
@@ -19,19 +14,9 @@ function Home(props: IAppProps) {
   const [lineColor, setLineColor] = React.useState<string>("#000");
   const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
   const [tool, setTool] = React.useState<Tools>(Tools.PENCIL);
-  const [usersCount, setUsersCount] = React.useState<number>(0);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
-  const [socket, setSocket] = React.useState<any>(io("https://livedrawserver.onrender.com"))
-
-  useEffect(() => {
-    socket.on("connected-users", (connectedUsers: number) => {
-      console.log("user connected or disconnected");
-      setUsersCount(connectedUsers);
-    });
-    return () => {
-      //socket.off("connected-users");
-    };
-  }, []);
+  //   const [socket, setSocket] = React.useState<any>(io("https://livedrawserver.onrender.com"))
+  const [socket, setSocket] = React.useState<any>(io("http://localhost:3001"));
 
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
@@ -92,60 +77,22 @@ function Home(props: IAppProps) {
 
   return (
     <div className="w-screen h-screen bg-blue-200 flex justify-between items-center flex-col gap-2">
-      <FlexContainer>
-        <h1 className="text-4xl font-karrik">live draw</h1>
-        <div className="flex items-center justify-center relative">
-          <ImageButton
-            src="/images/pencil.svg"
-            alt="pencil"
-            onClick={() => setTool(Tools.PENCIL)}
-          />
-          <ImageButton
-            src="/images/brush.svg"
-            alt="brush"
-            onClick={() => setTool(Tools.BRUSH)}
-          />
-          <ImageButton
-            src="/images/spray.svg"
-            alt="spray"
-            onClick={() => setTool(Tools.SPRAY)}
-          />
-          <button
-            className="  flex justify-center items-center "
-            style={{ width: 50, height: 50 }}
-            onClick={() => setShowColorPicker(!showColorPicker)}
-          >
-            <div
-              className="border-2 border-black transition-transform transform active:scale-95 hover:scale-105"
-              style={{ width: 30, height: 20, backgroundColor: lineColor }}
-            ></div>
-            {showColorPicker && (
-              <div className="absolute top-12 right-14 z-10" id="picker">
-                <GithubPicker
-                  color={lineColor}
-                  onChange={(e) => setLineColor(e.hex)}
-                  triangle={"top-right"}
-                  width={"212px"}
-                  colors={config.colorPalette}
-                />
-              </div>
-            )}
-          </button>
-          <ImageButton
-            src="/images/eraser.svg"
-            alt="eraser"
-            onClick={() => socket.emit("clear")}
-          />
-        </div>
-      </FlexContainer>
+      <Header
+        setLineColor={setLineColor}
+        setShowColorPicker={setShowColorPicker}
+        showColorPicker={showColorPicker}
+        lineColor={lineColor}
+        setTool={setTool}
+        socket={socket}
+      />
       <div
-        className="relative"
+        className="relative w-full"
         style={{
           backgroundImage: `url(/images/canvas.svg)`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
-          width: 547,
-          height: 446,
+			backgroundPosition: "center",
+			width: 547,
+			height: 446
         }}
       >
         <canvas
@@ -156,14 +103,7 @@ function Home(props: IAppProps) {
           className="absolute top-0 left-0 w-full h-full"
         />
       </div>
-      <FlexContainer>
-        <h2 className="text-xl font-karrik ">{usersCount}</h2>
-        <a href="github.com/lucafisc">
-          <h2 className="text-xl font-karrik hover:text-yellow-100">
-            github.com/lucafisc
-          </h2>
-        </a>
-      </FlexContainer>
+      <Footer />
     </div>
   );
 }
