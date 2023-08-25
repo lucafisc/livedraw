@@ -38,12 +38,9 @@ type Point = {
   y: number;
 };
 
-let connectedUsers = 0;
-
 io.on("connection", (socket) => {
-  connectedUsers++;
-  socket.emit("connected-users", connectedUsers);
-  console.log(`User connected. Total users: ${connectedUsers}`);
+  socket.emit("connected-users", io.engine.clientsCount);
+  console.log(`User connected. Total users: ${io.engine.clientsCount}`);
   socket.on(
     "draw-line",
     ({ prevPoint, currentPoint, lineColor, tool }: DrawLine) => {
@@ -64,9 +61,8 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("receive-newest-canvas", newestCanvas)
   );
   socket.on("disconnect", () => {
-    connectedUsers--;
-    socket.emit("connected-users", connectedUsers);
-    console.log(`User disconnected. Total users: ${connectedUsers}`);
+    socket.emit("connected-users", io.engine.clientsCount);
+    console.log(`User disconnected. Total users: ${io.engine.clientsCount}`);
   });
 });
 
