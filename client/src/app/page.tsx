@@ -1,7 +1,6 @@
 "use client";
 import { useDraw } from "@/hooks/useDraw";
 import * as React from "react";
-import { useState } from "react";
 import { Draw, Point, DrawLine, Tools } from "../types/types";
 import { GithubPicker } from "react-color";
 import { io } from "socket.io-client";
@@ -11,26 +10,17 @@ import ImageButton from "@/components/ImageButton";
 import FlexContainer from "@/components/FlexContainer";
 import { config } from "@/utils/config";
 
-//const socket = io("https://livedrawserver.onrender.com");
+const socket = io("https://livedrawserver.onrender.com");
 // const socket = io("http://localhost:3001");
 
 export interface IAppProps {}
 
 function Home(props: IAppProps) {
-  const [lineColor, setLineColor] = useState<string>("#000");
-  const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
-  const [tool, setTool] = useState<Tools>(Tools.PENCIL);
-  const [usersCount, setUsersCount] = useState<number>(0);
-  const [socket, setSocket] = useState<any>(null);
-
+  const [lineColor, setLineColor] = React.useState<string>("#000");
+  const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
+  const [tool, setTool] = React.useState<Tools>(Tools.PENCIL);
+  const [usersCount, setUsersCount] = React.useState<number>(0);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
-
-  useEffect(() => {
-    const newSocket = io("http://localhost:3001");
-    setSocket(newSocket);
-
-    return socket.disconnect();
-  }, []);
 
   useEffect(() => {
     socket.on("connected-users", (connectedUsers: number) => {
