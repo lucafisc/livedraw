@@ -24,7 +24,8 @@ function Home(props: IAppProps) {
 
 	
   useEffect(() => {
-	socket.on("connected-users", (connectedUsers: number) => {
+	  socket.on("connected-users", (connectedUsers: number) => {
+		console.log("user connected or disconnected")
 	  setUsersCount(connectedUsers);
 	});
 	return () => {
