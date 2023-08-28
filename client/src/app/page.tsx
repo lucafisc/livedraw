@@ -15,8 +15,8 @@ function Home(props: IAppProps) {
   const [showColorPicker, setShowColorPicker] = React.useState<boolean>(false);
   const [tool, setTool] = React.useState<Tools>(Tools.PENCIL);
   const { canvasRef, onMouseDown, clear } = useDraw(createLine);
-  //   const [socket, setSocket] = React.useState<any>(io("https://livedrawserver.onrender.com"))
-  const [socket, setSocket] = React.useState<any>(io("http://localhost:3001"));
+    const [socket, setSocket] = React.useState<any>(io("https://livedrawserver.onrender.com"))
+ // const [socket, setSocket] = React.useState<any>(io("http://localhost:3001"));
 
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
